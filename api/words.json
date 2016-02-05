@@ -1,5 +1,8 @@
 [
   { "word": "ἡ σοφία", "answer": 1 },
   { "word": "ὁ ἄνθρωπος", "answer": 2 },
-  { "word": "τό ἔθος", "answer": 3 }
+  { "word": "τό ἔθος", "answer": 3 },
+  { "word": "ἡ τραγῳδία", "answer": 1 },
+  { "word": "ὁ λόγος", "answer": 2 },
+  { "word": "ἡ εἰκών", "answer": 3 }
 ]
