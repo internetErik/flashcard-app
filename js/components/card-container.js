@@ -15,14 +15,14 @@ export class CardContainer extends React.Component{
       incorrect: 0
     } 
   }
-  position(length) {
+  randomPosition(length) {
     return Math.ceil(Math.random() * length)
   }
   componentDidMount() {
     WordService.getDeclensionWords()
       .fail((err) => console.log(err))
       .done((data) => {
-          var start = this.position(data.length-1)
+          var start = this.randomPosition(data.length-1)
           this.setState({ words: data, currentWord: start })
         })
   }
@@ -30,7 +30,7 @@ export class CardContainer extends React.Component{
     var cur = this.state.currentWord
     if(this.state.words[cur].answer === answer)
       this.setState({ 
-        currentWord: this.position(this.state.words.length-1), 
+        currentWord: this.randomPosition(this.state.words.length-1), 
         correct: this.state.correct+1 
       })
     else
