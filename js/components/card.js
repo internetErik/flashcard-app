@@ -1,7 +1,5 @@
 'use strict'
-
 import React from 'react'
-
 export class Card extends React.Component {
   constructor(){super()}
   render() {

@@ -1,10 +1,7 @@
 'use strict'
-
 import React from 'react'
-
 export class AnswerForm extends React.Component {
   constructor() {super()}
-
   handleAnswerClick(answer, e) {
     e.preventDefault()
     this.props.onAnswerSubmit(answer)

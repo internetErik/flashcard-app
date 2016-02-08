@@ -1,10 +1,8 @@
 'use strict'
-
 import React from 'react'
 import {Card} from './card.js!jsx'
 import {AnswerForm} from './answer-form.js!jsx'
 import {WordService} from '../services/word-service.js'
-
 export class CardContainer extends React.Component{
   constructor() {
     super()
