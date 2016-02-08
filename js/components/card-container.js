@@ -32,7 +32,7 @@ export class CardContainer extends React.Component{
         correct: this.state.correct+1 
       })
     else
-      this.setState({incorrect: this.state.incorrect+1})
+      this.setState({ incorrect: this.state.incorrect+1 })
   }
   render() {
     return (
