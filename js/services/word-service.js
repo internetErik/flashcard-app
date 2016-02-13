@@ -4,7 +4,7 @@ export var WordService = {
   getDeclensionWords() {
     return $.get('api/declensions.json')
   },
-  getVocabulary() {
+  getVocabularyWords() {
     return $.get('api/vocabulary.json')
   }
 }

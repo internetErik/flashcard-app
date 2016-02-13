@@ -1,3 +1,4 @@
 [  
-  { "word": "ἡ σοφία", "answer": 1 }
+  { "word": "ἡ σοφία", "type":"VOCABULARY", "answer": ["wisdom"] },
+  { "word": "wisdom", "type":"VOCABULARY", "answer": ["η σοφια", "ἡ σοφία"] }
 ]

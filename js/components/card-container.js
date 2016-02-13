@@ -3,6 +3,7 @@ import React from 'react'
 import {Card} from './card.js!jsx'
 import {AnswerForm} from './answer-form.js!jsx'
 import {WordService} from '../services/word-service.js'
+import {AnswerService} from '../services/answer-service.js'
 export class CardContainer extends React.Component{
   constructor() {
     super()
@@ -18,6 +19,7 @@ export class CardContainer extends React.Component{
   }
   componentDidMount() {
     WordService.getDeclensionWords()
+    // WordService.getVocabularyWords()
       .fail((err) => console.log(err))
       .done((data) => {
           var start = this.randomPosition(data.length-1)
@@ -26,7 +28,7 @@ export class CardContainer extends React.Component{
   }
   handleAnswerSubmit(answer) {
     var cur = this.state.currentWord
-    if(this.state.words[cur].answer === answer)
+    if(AnswerService(this.state.words[cur], answer))
       this.setState({ 
         currentWord: this.randomPosition(this.state.words.length-1), 
         correct: this.state.correct+1 
@@ -37,6 +39,8 @@ export class CardContainer extends React.Component{
   render() {
     return (
       <div className="app">
+        <button>Vocabulary</button>
+        <button>Declension</button>
         <h1>Declension Practice</h1>
         <div>Correct: { this.state.correct }</div>
         <div>Incorrect: { this.state.incorrect }</div>

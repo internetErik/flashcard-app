@@ -2,16 +2,20 @@
 import React from 'react'
 export class AnswerForm extends React.Component {
   constructor() { super() }
-  handleAnswerClick(answer, e) {
+  handleAnswerClick(e) {
     e.preventDefault()
-    this.props.onAnswerSubmit(answer)
+    console.dir(e)
+    this.props.onAnswerSubmit(e.value)
   }
   render() {
     return (
       <section className="answerForm">
-        <button onClick={ this.handleAnswerClick.bind(this, 1) }>First</button>
-        <button onClick={ this.handleAnswerClick.bind(this, 2) }>Second</button>
-        <button onClick={ this.handleAnswerClick.bind(this, 3) }>Third</button>
+        <button value="1"
+          onClick={ this.handleAnswerClick.bind(this) }>First</button>
+        <button value="2"
+          onClick={ this.handleAnswerClick.bind(this) }>Second</button>
+        <button value="3"
+          onClick={ this.handleAnswerClick.bind(this) }>Third</button>
       </section>
     )
   }
