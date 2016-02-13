@@ -5,9 +5,9 @@ export class Card extends React.Component {
   render() {
     return (
       <div className="card">
-        <h2 className="card-word">
+        <h1 className="card-word">
           { this.props.word }
-        </h2>
+        </h1>
       </div>
     )
   }

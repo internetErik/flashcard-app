@@ -1,8 +1,10 @@
 'use strict'
 import * as $ from 'jquery'
-class _WordService {
+export var WordService = {
   getDeclensionWords() {
-    return $.get('api/words.json')
-  } 
+    return $.get('api/declensions.json')
+  },
+  getVocabulary() {
+    return $.get('api/vocabulary.json')
+  }
 }
-export var WordService = new _WordService()

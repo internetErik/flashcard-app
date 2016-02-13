@@ -7,7 +7,7 @@ export class CardContainer extends React.Component{
   constructor() {
     super()
     this.state = { 
-      words: [{word: '', answer: 0}], 
+      words: [{word: '', answer: 0}],
       currentWord: 0,
       correct: 0,
       incorrect: 0
