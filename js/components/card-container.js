@@ -12,20 +12,34 @@ export class CardContainer extends React.Component{
       words: [{word: '', answer: 0}],
       currentWord: 0,
       correct: 0,
-      incorrect: 0
+      incorrect: 0,
+      type: 'DECLENSION'
     } 
+  }
+  handleTypeClick(e) {
+    e.preventDefault()
+    this.setState({type: e.target.value})
+    this.getWords()
   }
   randomPosition(length) {
     return Math.ceil(Math.random() * length-1)
   }
+  getWords() {
+    var p
+    if(this.state.type === 'DECLENSION')
+      p = WordService.getDeclensionWords()
+    else 
+      p = WordService.getVocabularyWords()
+      
+    p
+    .fail((err) => console.log(err))
+    .done((data) => {
+        var start = this.randomPosition(data.length)
+        this.setState({ words: data, currentWord: start })
+      })
+  }
   componentDidMount() {
-    // WordService.getDeclensionWords()
-    WordService.getVocabularyWords()
-      .fail((err) => console.log(err))
-      .done((data) => {
-          var start = this.randomPosition(data.length)
-          this.setState({ words: data, currentWord: start })
-        })
+    this.getWords()
   }
   handleAnswerSubmit(answer) {
     var cur = this.state.currentWord
@@ -50,8 +64,8 @@ export class CardContainer extends React.Component{
     }
     return (
       <div className="app">
-        <button>Vocabulary</button>
-        <button>Declension</button>
+        <button value="VOCABULARY" onClick={ this.handleTypeClick.bind(this) }>Vocabulary</button>
+        <button value="DECLENSION" onClick={ this.handleTypeClick.bind(this) }>Declension</button>
         <h1>Declension Practice</h1>
         <div>Correct: { this.state.correct }</div>
         <div>Incorrect: { this.state.incorrect }</div>
