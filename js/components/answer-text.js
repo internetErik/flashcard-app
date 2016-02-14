@@ -8,6 +8,7 @@ export class AnswerText extends React.Component {
   handleTextAnswer(e) {
     e.preventDefault()
     this.props.onAnswerSubmit(this.state.text)
+    this.setState({text: ""})
   }
   handleTextAnswerChange(e) {
     e.preventDefault()
