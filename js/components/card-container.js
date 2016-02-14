@@ -1,7 +1,8 @@
 'use strict'
 import React from 'react'
 import {Card} from './card.js!jsx'
-import {AnswerForm} from './answer-form.js!jsx'
+import {AnswerButtons} from './answer-buttons.js!jsx'
+import {AnswerText} from './answer-text.js!jsx'
 import {WordService} from '../services/word-service.js'
 import {AnswerService} from '../services/answer-service.js'
 export class CardContainer extends React.Component{
@@ -15,14 +16,14 @@ export class CardContainer extends React.Component{
     } 
   }
   randomPosition(length) {
-    return Math.ceil(Math.random() * length)
+    return Math.ceil(Math.random() * length-1)
   }
   componentDidMount() {
-    WordService.getDeclensionWords()
-    // WordService.getVocabularyWords()
+    // WordService.getDeclensionWords()
+    WordService.getVocabularyWords()
       .fail((err) => console.log(err))
       .done((data) => {
-          var start = this.randomPosition(data.length-1)
+          var start = this.randomPosition(data.length)
           this.setState({ words: data, currentWord: start })
         })
   }
@@ -30,13 +31,23 @@ export class CardContainer extends React.Component{
     var cur = this.state.currentWord
     if(AnswerService(this.state.words[cur], answer))
       this.setState({ 
-        currentWord: this.randomPosition(this.state.words.length-1), 
+        currentWord: this.randomPosition(this.state.words.length), 
         correct: this.state.correct+1 
       })
     else
       this.setState({ incorrect: this.state.incorrect+1 })
   }
   render() {
+    var answerForm = ""
+    if(this.state.words.length > 0) {
+      let word = this.state.words[this.state.currentWord]
+      if(word.type === "DECLENSION") {
+        answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
+      }
+      else {
+        answerForm = <AnswerText onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
+      }
+    }
     return (
       <div className="app">
         <button>Vocabulary</button>
@@ -45,7 +56,7 @@ export class CardContainer extends React.Component{
         <div>Correct: { this.state.correct }</div>
         <div>Incorrect: { this.state.incorrect }</div>
         <Card word={ this.state.words[this.state.currentWord].word } />
-        <AnswerForm onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
+        { answerForm }
       </div>
     )
   }
