@@ -18,8 +18,8 @@ export class AppDesktop extends React.Component {
   }
   handleTypeClick(e) {
     e.preventDefault()
-    this.setState({type: e.target.value})
-    this.getWords()
+    this.setState({words: [], type: e.target.value})
+    setTimeout(this.getWords.bind(this), 0)
   }
   randomPosition(length) {
     return Math.ceil(Math.random() * length-1)
@@ -28,7 +28,7 @@ export class AppDesktop extends React.Component {
     var p
     if(this.state.type === 'DECLENSION')
       p = WordService.getDeclensionWords()
-    else 
+    else if(this.state.type === 'VOCABULARY')
       p = WordService.getVocabularyWords()
       
     p
@@ -43,7 +43,7 @@ export class AppDesktop extends React.Component {
   }
   handleAnswerSubmit(answer) {
     var cur = this.state.currentWord
-    if(AnswerService(this.state.words[cur], answer))
+    if(AnswerService(this.state.type, this.state.words[cur], answer))
       this.setState({ 
         currentWord: this.randomPosition(this.state.words.length), 
         correct: this.state.correct+1 
@@ -54,17 +54,19 @@ export class AppDesktop extends React.Component {
   render() {
     var answerForm = ""
     if(this.state.words.length > 0) {
-      let word = this.state.words[this.state.currentWord]
-      if(word.type === "DECLENSION") {
+      let type = this.state.type
+      if(type === "DECLENSION") {
         answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
       }
-      else {
+      else if(type === "VOCABULARY") {
         answerForm = <AnswerText onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
       }
     }
     return (
       <div className="card-container">
-        <h1>Declension Practice</h1>
+        <button value="VOCABULARY" onClick={ this.handleTypeClick.bind(this) }>Vocabulary</button>
+        <button value="DECLENSION" onClick={ this.handleTypeClick.bind(this) }>Declension</button>
+        <h1>Greek Practice</h1>
         <div>Correct: { this.state.correct }</div>
         <div>Incorrect: { this.state.incorrect }</div>
         <Card word={ this.state.words[this.state.currentWord].word } />

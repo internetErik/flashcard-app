@@ -1,7 +1,7 @@
 'use strict'
-export var AnswerService = (word, answer) => {
-  if(word.type && AnswerTypes[word.type])
-    return AnswerTypes[word.type](word, answer)
+export var AnswerService = (type, word, answer) => {
+  if(AnswerTypes[type])
+    return AnswerTypes[type](word, answer)
   else
     console.log("Error!")
 }
