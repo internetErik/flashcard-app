@@ -1,5 +1,5 @@
 [  
-  { "word": "ἡ σοφία", "answer": ["wisdom"] },
-  { "word": "wisdom", "answer": ["ἡ σοφία", "η σοφια", "σοφία", "σοφια"] },
-  { "word": "friendship", "answer": ["η φιλοσ"]}
+  { "question": "ἡ σοφία", "answer": ["wisdom"] },
+  { "question": "wisdom", "answer": ["ἡ σοφία", "η σοφια", "σοφία", "σοφια"] },
+  { "question": "friendship", "answer": ["η φιλοσ"]}
 ]

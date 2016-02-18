@@ -6,7 +6,7 @@ export class Card extends React.Component {
     return (
       <div className="card">
         <h1 className="card-word">
-          { this.props.word }
+          { this.props.question }
         </h1>
       </div>
     )

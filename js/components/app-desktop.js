@@ -9,37 +9,38 @@ export class AppDesktop extends React.Component {
   constructor() {
     super()
     this.state = { 
-      words: [{word: '', answer: 0}],
-      currentWord: 0,
+      questions: [{question: '', answer: 0}],
+      curQuestion: 0,
       correct: 0,
       incorrect: 0,
-      type: 'DECLENSION'
+      type: 'DECLENSION',
+      language: 'ATTIC GREEK'
     } 
   }
   handleTypeClick(e) {
     e.preventDefault()
-    this.setState({words: [], type: e.target.value})
-    setTimeout(this.getWords.bind(this), 0)
+    this.setState({question: [], type: e.target.value})
+    setTimeout(this.getQuestions.bind(this), 0)
   }
   randomPosition(length) {
     return Math.ceil(Math.random() * length-1)
   }
-  getWords() {
+  getQuestions() {
     QuestionService(this.state.type)
       .fail((err) => console.log(err))
       .done((data) => {
           var start = this.randomPosition(data.length)
-          this.setState({ words: data, currentWord: start })
+          this.setState({ questions: data, curQuestion: start })
         })
   }
   componentDidMount() {
-    this.getWords()
+    this.getQuestions()
   }
   handleAnswerSubmit(answer) {
-    var cur = this.state.currentWord
-    if(AnswerService(this.state.type, this.state.words[cur], answer))
+    var cur = this.state.curQuestion
+    if(AnswerService(this.state.type, this.state.questions[cur], answer))
       this.setState({ 
-        currentWord: this.randomPosition(this.state.words.length), 
+        curQuestion: this.randomPosition(this.state.questions.length), 
         correct: this.state.correct+1 
       })
     else
@@ -47,7 +48,7 @@ export class AppDesktop extends React.Component {
   }
   render() {
     var answerForm = ""
-    if(this.state.words.length > 0) {
+    if(this.state.questions.length > 0) {
       let type = this.state.type
       if(type === "DECLENSION") {
         answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
@@ -63,7 +64,7 @@ export class AppDesktop extends React.Component {
         <h1>Greek Practice</h1>
         <div>Correct: { this.state.correct }</div>
         <div>Incorrect: { this.state.incorrect }</div>
-        <Card word={ this.state.words[this.state.currentWord].word } />
+        <Card question={ this.state.questions[this.state.curQuestion].question } />
         { answerForm }
       </div>
     )
