@@ -20,7 +20,7 @@ export class AppDesktop extends React.Component {
   }
   handleTypeClick(e) {
     e.preventDefault()
-    var state = {question: [], type: e.target.type}
+    var state = {question: [], type: e.target.value}
     state.step = (e.target.value === 'STEPS') ? 0 : -1;
     this.setState(state)
     setTimeout(this.getQuestions.bind(this), 0)
