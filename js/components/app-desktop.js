@@ -5,7 +5,7 @@ import {AnswerButtons} from './answer-buttons.js!jsx'
 import {AnswerText} from './answer-text.js!jsx'
 import {WordService} from '../services/word-service.js'
 import {AnswerService} from '../services/answer-service.js'
-export class CardContainer extends React.Component{
+export class AppDesktop extends React.Component {
   constructor() {
     super()
     this.state = { 
@@ -63,9 +63,7 @@ export class CardContainer extends React.Component{
       }
     }
     return (
-      <div className="app">
-        <button value="VOCABULARY" onClick={ this.handleTypeClick.bind(this) }>Vocabulary</button>
-        <button value="DECLENSION" onClick={ this.handleTypeClick.bind(this) }>Declension</button>
+      <div className="card-container">
         <h1>Declension Practice</h1>
         <div>Correct: { this.state.correct }</div>
         <div>Incorrect: { this.state.incorrect }</div>
