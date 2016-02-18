@@ -3,7 +3,7 @@ import React from 'react'
 import {Card} from './card.js!jsx'
 import {AnswerButtons} from './answer-buttons.js!jsx'
 import {AnswerText} from './answer-text.js!jsx'
-import {WordService} from '../services/word-service.js'
+import {QuestionService} from '../services/question-service.js'
 import {AnswerService} from '../services/answer-service.js'
 export class AppDesktop extends React.Component {
   constructor() {
@@ -25,18 +25,12 @@ export class AppDesktop extends React.Component {
     return Math.ceil(Math.random() * length-1)
   }
   getWords() {
-    var p
-    if(this.state.type === 'DECLENSION')
-      p = WordService.getDeclensionWords()
-    else if(this.state.type === 'VOCABULARY')
-      p = WordService.getVocabularyWords()
-      
-    p
-    .fail((err) => console.log(err))
-    .done((data) => {
-        var start = this.randomPosition(data.length)
-        this.setState({ words: data, currentWord: start })
-      })
+    QuestionService(this.state.type)
+      .fail((err) => console.log(err))
+      .done((data) => {
+          var start = this.randomPosition(data.length)
+          this.setState({ words: data, currentWord: start })
+        })
   }
   componentDidMount() {
     this.getWords()
