@@ -13,13 +13,16 @@ export class AppDesktop extends React.Component {
       curQuestion: 0,
       correct: 0,
       incorrect: 0,
-      type: 'DECLENSION',
+      type: 'STEPS',
+      step: 0,
       language: 'ATTIC GREEK'
     } 
   }
   handleTypeClick(e) {
     e.preventDefault()
-    this.setState({question: [], type: e.target.value})
+    var state = {question: [], type: e.target.type}
+    state.step = (e.target.value === 'STEPS') ? 0 : -1;
+    this.setState(state)
     setTimeout(this.getQuestions.bind(this), 0)
   }
   randomPosition(length) {
@@ -38,11 +41,21 @@ export class AppDesktop extends React.Component {
   }
   handleAnswerSubmit(answer) {
     var cur = this.state.curQuestion
-    if(AnswerService(this.state.type, this.state.questions[cur], answer))
-      this.setState({ 
-        curQuestion: this.randomPosition(this.state.questions.length), 
-        correct: this.state.correct+1 
-      })
+    if(AnswerService(this.state.type, this.state.questions[cur], answer, this.state.step)) {
+      let state = { correct: this.state.correct+1 };
+      if(this.state.step >= 0) {
+        if(this.state.step < this.state.questions[cur].answer.length -1)
+          state.step = this.state.step+1
+        else {
+          state.step = 0
+          state.curQuestion = this.randomPosition(this.state.questions.length)
+        }
+      }
+      else
+        state.curQuestion = this.randomPosition(this.state.questions.length)
+
+      this.setState(state)
+    }
     else
       this.setState({ incorrect: this.state.incorrect+1 })
   }
@@ -56,11 +69,15 @@ export class AppDesktop extends React.Component {
       else if(type === "VOCABULARY") {
         answerForm = <AnswerText onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
       }
+      else if(type === "STEPS") {
+        answerForm = <AnswerButtons onAnswerSubmit= { this.handleAnswerSubmit.bind(this) } />
+      }
     }
     return (
       <div className="card-container">
         <button value="VOCABULARY" onClick={ this.handleTypeClick.bind(this) }>Vocabulary</button>
         <button value="DECLENSION" onClick={ this.handleTypeClick.bind(this) }>Declension</button>
+        <button value="STEPS"      onClick={ this.handleTypeClick.bind(this) }>Steps</button>
         <h1>Greek Practice</h1>
         <div>Correct: { this.state.correct }</div>
         <div>Incorrect: { this.state.incorrect }</div>
