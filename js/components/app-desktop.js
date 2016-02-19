@@ -2,6 +2,7 @@
 import React from 'react'
 import { Card } from './card.js!jsx'
 import { ScoreBoard } from './score-board.js!jsx'
+import { QuestionTypeMenu } from './question-type-menu.js!jsx'
 import { AnswerButtons } from './answer-buttons.js!jsx'
 import { AnswerText } from './answer-text.js!jsx'
 import { QuestionService } from '../services/question-service.js'
@@ -19,10 +20,9 @@ export class AppDesktop extends React.Component {
       language: 'ATTIC GREEK'
     } 
   }
-  handleTypeClick(e) {
-    e.preventDefault()
-    var state = {question: [], type: e.target.value}
-    state.step = (e.target.value === 'STEPS') ? 0 : -1;
+  handleTypeClick(type) {
+    var state = {question: [], type: type}
+    state.step = (type === 'STEPS') ? 0 : -1;
     this.setState(state)
     setTimeout(this.getQuestions.bind(this), 0)
   }
@@ -73,9 +73,7 @@ export class AppDesktop extends React.Component {
     return (
       <div className="card-container">
         <h1>Greek Practice</h1>
-        <button value="VOCABULARY" onClick={ this.handleTypeClick.bind(this) }>Vocabulary</button>
-        <button value="DECLENSION" onClick={ this.handleTypeClick.bind(this) }>Declension</button>
-        <button value="STEPS"      onClick={ this.handleTypeClick.bind(this) }>Steps</button>
+        <QuestionTypeMenu onTypeClicked={ this.handleTypeClick.bind(this) } />
         <ScoreBoard correct={ this.state.correct } incorrect={ this.state.incorrect } />
         <Card question={ this.state.questions[this.state.curQuestion].question } />
         { answerForm }
