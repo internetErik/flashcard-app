@@ -1,10 +1,11 @@
 'use strict'
 import React from 'react'
-import {Card} from './card.js!jsx'
-import {AnswerButtons} from './answer-buttons.js!jsx'
-import {AnswerText} from './answer-text.js!jsx'
-import {QuestionService} from '../services/question-service.js'
-import {AnswerService} from '../services/answer-service.js'
+import { Card } from './card.js!jsx'
+import { ScoreBoard } from './score-board.js!jsx'
+import { AnswerButtons } from './answer-buttons.js!jsx'
+import { AnswerText } from './answer-text.js!jsx'
+import { QuestionService } from '../services/question-service.js'
+import { AnswerService } from '../services/answer-service.js'
 export class AppDesktop extends React.Component {
   constructor() {
     super()
@@ -53,7 +54,6 @@ export class AppDesktop extends React.Component {
       }
       else
         state.curQuestion = this.randomPosition(this.state.questions.length)
-
       this.setState(state)
     }
     else
@@ -63,24 +63,20 @@ export class AppDesktop extends React.Component {
     var answerForm = ""
     if(this.state.questions.length > 0) {
       let type = this.state.type
-      if(type === "DECLENSION") {
+      if(type === "DECLENSION")
         answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
-      }
-      else if(type === "VOCABULARY") {
+      else if(type === "VOCABULARY")
         answerForm = <AnswerText onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
-      }
-      else if(type === "STEPS") {
+      else if(type === "STEPS")
         answerForm = <AnswerButtons onAnswerSubmit= { this.handleAnswerSubmit.bind(this) } />
-      }
     }
     return (
       <div className="card-container">
+        <h1>Greek Practice</h1>
         <button value="VOCABULARY" onClick={ this.handleTypeClick.bind(this) }>Vocabulary</button>
         <button value="DECLENSION" onClick={ this.handleTypeClick.bind(this) }>Declension</button>
         <button value="STEPS"      onClick={ this.handleTypeClick.bind(this) }>Steps</button>
-        <h1>Greek Practice</h1>
-        <div>Correct: { this.state.correct }</div>
-        <div>Incorrect: { this.state.incorrect }</div>
+        <ScoreBoard correct={ this.state.correct } incorrect={ this.state.incorrect } />
         <Card question={ this.state.questions[this.state.curQuestion].question } />
         { answerForm }
       </div>
