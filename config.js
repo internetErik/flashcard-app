@@ -22,7 +22,6 @@ System.config({
     "jsx": "github:floatdrop/plugin-jsx@1.1.0",
     "react": "npm:react@0.14.7",
     "react-dom": "npm:react-dom@0.14.6",
-    "react-redux": "npm:react-redux@4.4.0",
     "github:floatdrop/plugin-jsx@1.1.0": {
       "react-tools": "npm:react-tools@0.13.3"
     },
@@ -316,10 +315,6 @@ System.config({
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
     },
-    "npm:invariant@2.2.0": {
-      "loose-envify": "npm:loose-envify@1.1.0",
-      "process": "github:jspm/nodelibs-process@0.1.2"
-    },
     "npm:jstransform@10.1.0": {
       "base62": "npm:base62@0.1.1",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -327,16 +322,6 @@ System.config({
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "source-map": "npm:source-map@0.1.31"
-    },
-    "npm:lodash@4.5.0": {
-      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
-      "process": "github:jspm/nodelibs-process@0.1.2"
-    },
-    "npm:loose-envify@1.1.0": {
-      "js-tokens": "npm:js-tokens@1.0.2",
-      "process": "github:jspm/nodelibs-process@0.1.2",
-      "stream": "github:jspm/nodelibs-stream@0.1.0",
-      "util": "github:jspm/nodelibs-util@0.1.0"
     },
     "npm:miller-rabin@4.0.0": {
       "bn.js": "npm:bn.js@4.6.2",
@@ -405,15 +390,6 @@ System.config({
     "npm:react-dom@0.14.6": {
       "react": "npm:react@0.14.6"
     },
-    "npm:react-redux@4.4.0": {
-      "hoist-non-react-statics": "npm:hoist-non-react-statics@1.0.5",
-      "invariant": "npm:invariant@2.2.0",
-      "lodash": "npm:lodash@4.5.0",
-      "loose-envify": "npm:loose-envify@1.1.0",
-      "process": "github:jspm/nodelibs-process@0.1.2",
-      "react": "npm:react@0.14.7",
-      "redux": "npm:redux@3.3.1"
-    },
     "npm:react-tools@0.13.3": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "commoner": "npm:commoner@0.10.4",
@@ -447,12 +423,6 @@ System.config({
       "private": "npm:private@0.1.6",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "source-map": "npm:source-map@0.5.3"
-    },
-    "npm:redux@3.3.1": {
-      "lodash": "npm:lodash@4.5.0",
-      "lodash-es": "npm:lodash-es@4.5.0",
-      "loose-envify": "npm:loose-envify@1.1.0",
-      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:ripemd160@1.0.1": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
