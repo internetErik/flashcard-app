@@ -1,5 +1,6 @@
 'use strict'
 import React from 'react'
+import * as Redux from 'redux'
 import {Card} from './card.js!jsx'
 import {AnswerButtons} from './answer-buttons.js!jsx'
 import {AnswerText} from './answer-text.js!jsx'
@@ -8,6 +9,7 @@ import {AnswerService} from '../services/answer-service.js'
 export class AppDesktop extends React.Component {
   constructor() {
     super()
+    console.dir(Redux)
     this.state = { 
       questions: [{question: '', answer: 0}],
       curQuestion: 0,
