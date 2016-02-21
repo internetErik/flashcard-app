@@ -5,17 +5,18 @@ import { ScoreBoard } from './score-board.js!jsx'
 import { QuestionTypeMenu } from './question-type-menu.js!jsx'
 import { AnswerButtons } from './answer-buttons.js!jsx'
 import { AnswerText } from './answer-text.js!jsx'
+import { AnswerMultiple } from './answer-multiple.js!jsx'
 import { QuestionService } from '../services/question-service.js'
 import { AnswerService } from '../services/answer-service.js'
 export class AppDesktop extends React.Component {
   constructor() {
     super()
     this.state = { 
-      questions: [{question: '', answer: 0}],
+      questions: [{ question: '', answer: 0 }],
       curQuestion: 0,
       correct: 0,
       incorrect: 0,
-      type: 'STEPS',
+      type: 'MULTIPLE',
       step: 0,
       language: 'ATTIC GREEK'
     } 
@@ -43,7 +44,7 @@ export class AppDesktop extends React.Component {
   handleAnswerSubmit(answer) {
     var cur = this.state.curQuestion
     if(AnswerService(this.state.type, this.state.questions[cur], answer, this.state.step)) {
-      let state = { correct: this.state.correct+1 };
+      let state = { correct: this.state.correct+1 }
       if(this.state.step >= 0) {
         if(this.state.step < this.state.questions[cur].answer.length -1)
           state.step = this.state.step+1
@@ -61,21 +62,25 @@ export class AppDesktop extends React.Component {
   }
   render() {
     var answerForm = ""
+    var current = {question: "", answer: ""}
     if(this.state.questions.length > 0) {
       let type = this.state.type
+      current = this.state.questions[this.state.curQuestion]
       if(type === "DECLENSION")
         answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
       else if(type === "VOCABULARY")
         answerForm = <AnswerText onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
       else if(type === "STEPS")
-        answerForm = <AnswerButtons onAnswerSubmit= { this.handleAnswerSubmit.bind(this) } />
+        answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
+      else if(type === "MULTIPLE")
+        answerForm = <AnswerMultiple answers={ current.answer } onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
     }
     return (
       <div className="card-container">
         <h1>Greek Practice</h1>
         <QuestionTypeMenu onTypeClicked={ this.handleTypeClick.bind(this) } />
         <ScoreBoard correct={ this.state.correct } incorrect={ this.state.incorrect } />
-        <Card question={ this.state.questions[this.state.curQuestion].question } />
+        <Card question={ current.question } />
         { answerForm }
       </div>
     )

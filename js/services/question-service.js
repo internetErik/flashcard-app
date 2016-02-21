@@ -9,5 +9,6 @@ export var QuestionService = (type) => {
 var QuestionTypes = {
   "DECLENSION": () => $.get('api/declensions.json'),
   "VOCABULARY": () => $.get('api/vocabulary.json'),
-  "STEPS"     : () => $.get('api/steps.json')
+  "STEPS"     : () => $.get('api/steps.json'),
+  "MULTIPLE"  : () => $.get('api/multiple.json')
 }

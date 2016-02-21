@@ -12,6 +12,7 @@ export class QuestionTypeMenu extends React.Component {
         <button value="VOCABULARY" onClick={ this.handleTypeClick.bind(this) }>Vocabulary</button>
         <button value="DECLENSION" onClick={ this.handleTypeClick.bind(this) }>Declension</button>
         <button value="STEPS"      onClick={ this.handleTypeClick.bind(this) }>Steps</button>
+        <button value="MULTIPLE"   onClick={ this.handleTypeClick.bind(this) }>Multiple</button>
       </div>         
     )
   }

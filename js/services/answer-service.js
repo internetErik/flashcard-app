@@ -1,13 +1,14 @@
 'use strict'
-export var AnswerService = (type, word, answer, step) => {
+export var AnswerService = (type, question, answer, step) => {
   if(AnswerTypes[type])
-    return AnswerTypes[type](word, answer, step)
+    return AnswerTypes[type](question, answer, step)
   else
     console.log("Error!")
 }
 var AnswerTypes = {
-  "DECLENSION": (word, answer) => word.answer === answer,
-  "VOCABULARY": (word, answer) => word.answer.indexOf(answer) > -1,
-  "STEPS"     : (word, answer, step) => word.answer[step] === answer
+  "DECLENSION": (question, answer) => question.answer === answer,
+  "VOCABULARY": (question, answer) => question.answer.indexOf(answer) > -1,
+  "STEPS"     : (question, answer, step) => question.answer[step] === answer,
+  "MULTIPLE"  : (question, answer) => question.answer[0] === answer
 }
   
