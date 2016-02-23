@@ -5,18 +5,20 @@ import { Provider, connect } from 'react-redux'
 import ReactDOM from 'react-dom'
 import { AppDesktop } from './components/app-desktop.js!jsx'
 import { LANGUAGE_CHANGE, languageChange } from './redux/actions.js'
-function appDesktop(state = { language: 'ATTIC GREEK' }, action) {
+function appDesktop(state = { language: 'ATTIC GREEK', cardSets: [] }, action) {
   switch(action.type) {
     case LANGUAGE_CHANGE:
-      return { language: action.language }
+      state.cardSets.push(1)
+      return { language: action.language, cardSets: state.cardSets }
     default:
       return state
   }
 }
-let appDesktopStore = createStore(appDesktop)
 const mapStateToProps = (state) => {
-  console.log(state)
-  return { language: state.language }
+  return { 
+    language: state.language,
+    cardSets: state.cardSets
+  }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -29,6 +31,7 @@ let App = connect(
   mapStateToProps,
   mapDispatchToProps)
 (AppDesktop) 
+let appDesktopStore = createStore(appDesktop)
 ReactDOM.render(
   <Provider store={ appDesktopStore }>
     <App />
