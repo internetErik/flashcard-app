@@ -1,4 +1,4 @@
 [
-  { "question": "answer 1 2 3", "answer": [1, 2, 3] },
-  { "question": "answer 3 2 1", "answer": [3, 2, 1] }
+  { "question": ["answer <em>1</em> 2 3", "answer 2", "answer 3"], "answer": [1, 2, 3] },
+  { "question": ["answer <em>3</em> 2 1", "answer 2", "answer 1"], "answer": [3, 2, 1] }
 ]

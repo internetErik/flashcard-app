@@ -16,7 +16,7 @@ export class CardSet extends React.Component {
       curQuestion: 0,
       correct: 0,
       incorrect: 0,
-      type: 'MULTIPLE',
+      type: 'STEPS',
       step: 0
     }
   }
@@ -60,11 +60,13 @@ export class CardSet extends React.Component {
       this.setState({ incorrect: this.state.incorrect+1 })
   }
   render() {
-    var answerForm = ""
-    var current = { question: "", answer: "" }
+    var answerForm = "", question = "", answer = ""
     if(this.state.questions.length > 0) {
       let type = this.state.type
-      current = this.state.questions[this.state.curQuestion]
+      question = this.state.questions[this.state.curQuestion].question
+      answer = this.state.questions[this.state.curQuestion].answer
+      if(this.state.step > -1)
+        question = this.state.questions[this.state.curQuestion].question[this.state.step]
       if(type === "DECLENSION")
         answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
       else if(type === "VOCABULARY")
@@ -72,13 +74,13 @@ export class CardSet extends React.Component {
       else if(type === "STEPS")
         answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
       else if(type === "MULTIPLE")
-        answerForm = <AnswerMultiple answers={ current.answer } onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
+        answerForm = <AnswerMultiple answers={ answer } onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
     }
     return (
       <div className="card-set">
         <QuestionTypeMenu onTypeClicked={ this.handleTypeClick.bind(this) } />
         <ScoreBoard correct={ this.state.correct } incorrect={ this.state.incorrect } />
-        <Card question={ current.question } />
+        <Card question={ question } />
         { answerForm }
       </div>
     )
