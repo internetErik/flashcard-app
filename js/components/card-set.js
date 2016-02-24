@@ -27,9 +27,9 @@ export class CardSet extends React.Component {
           this.setState({ questions: data, curQuestion: start })
         })
   }
-  // componentDidMount() {
-  //   this.getQuestions()
-  // }
+  componentDidMount() {
+    this.getQuestions()
+  }
   handleAnswerSubmit(answer) {
     var cur = this.state.curQuestion
     if(AnswerService(this.state.type, this.state.questions[cur], answer, this.state.step)) {
@@ -50,7 +50,6 @@ export class CardSet extends React.Component {
       this.setState({ incorrect: this.state.incorrect+1 })
   }
   render() {
-    console.dir(this.props)
     var answerForm = "", question = "", answer = ""
     if(this.state.questions.length > 0) {
       let type = this.state.type
