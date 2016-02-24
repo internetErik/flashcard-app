@@ -1,8 +1,8 @@
 //////////////////
 //action types
-export const LANGUAGE_CHANGE = 'LANGUAGE_CHANGE'
+export const ADD_LANGUAGE = 'ADD_LANGUAGE'
 //////////////////
 //action creators
-export function languageChange(language) {
-  return { type: LANGUAGE_CHANGE, language }
+export function addLanguage(language) {
+  return { type: ADD_LANGUAGE, language }
 }

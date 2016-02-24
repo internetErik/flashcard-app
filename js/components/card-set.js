@@ -12,6 +12,7 @@ export class CardSet extends React.Component {
   constructor() {
     super()
     this.state = { 
+      language: 'ATTIC GREEK',
       questions: [{ question: '', answer: 0 }],
       curQuestion: 0,
       correct: 0,
