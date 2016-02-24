@@ -9,10 +9,10 @@ export function appDesktop(state = { cardSets: [] }, action) {
         curQuestion: 0,
         correct: 0,
         incorrect: 0,
-        type: 'STEPS',
+        type: 'VOCABULARY',
         step: 0
       })
-      return { cardSets: state.cardSets }
+      return state
     default:
       return state
   }

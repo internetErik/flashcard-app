@@ -1,14 +1,18 @@
 'use strict'
 import * as $ from 'jquery'
-export var QuestionService = (type) => {
-  if(QuestionTypes[type])
-    return QuestionTypes[type]()
+export var QuestionService = (language, type) => {
+  if(LANGUAGE_FOLDERS[language] && QUESTION_TYPES[type])
+    return QUESTION_TYPES[type](LANGUAGE_FOLDERS[language])
   else
     console.log("Error!")
 }
-var QuestionTypes = {
-  "DECLENSION": () => $.get('api/declensions.json'),
-  "VOCABULARY": () => $.get('api/vocabulary.json'),
-  "STEPS"     : () => $.get('api/steps.json'),
-  "MULTIPLE"  : () => $.get('api/multiple.json')
+const QUESTION_TYPES = {
+  "DECLENSION": (f) => $.get(`api/${ f }/declensions.json`),
+  "VOCABULARY": (f) => $.get(`api/${ f }/vocabulary.json`),
+  "STEPS"     : (f) => $.get(`api/${ f }/steps.json`),
+  "MULTIPLE"  : (f) => $.get(`api/${ f }/multiple.json`)
+}
+const LANGUAGE_FOLDERS = {
+  'ATTIC_GREEK': 'attic-greek',
+  'GERMAN'     : 'german'
 }

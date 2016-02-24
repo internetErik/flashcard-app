@@ -1,6 +1,7 @@
 'use strict'
 import React, { PropTypes } from 'react'
 import { CardSet } from './card-set.js!jsx'
+import { CardSet2 } from './card-set2.js!jsx'
 export class AppDesktop extends React.Component {
   render() {
     const { cardSets, onAddLanguage } = this.props
@@ -9,10 +10,10 @@ export class AppDesktop extends React.Component {
       <div className="app-desktop">
         <div>
           Add Language:
-          <button value="ATTIC GREEK" onClick={ (e) => onAddLanguage(e.target.value) }>ATTIC GREEK</button>
-          <button value="GERMAN" onClick={ (e) => onAddLanguage(e.target.value) }>GERMAN</button>
+          <button value="ATTIC_GREEK" onClick={ (e) => onAddLanguage(e.target.value) }>ATTIC GREEK</button>
+          <button value="GERMAN"      onClick={ (e) => onAddLanguage(e.target.value) }>GERMAN</button>
         </div>
-        <CardSet />
+        <CardSet2 />
         <h1>Card Sets</h1>
         { sets }
       </div>
