@@ -19,5 +19,12 @@ export class AppDesktop extends React.Component {
 AppDesktop.propTypes = {
   language: PropTypes.string.isRequired,
   onLanguageChange: PropTypes.func.isRequired,
-  cardSets: PropTypes.array.isRequired
+  cardSets: PropTypes.arrayOf(PropTypes.shape({
+    questions:   PropTypes.array.isRequired,
+    curQuestion: PropTypes.number,
+    correct:     PropTypes.number,
+    incorrect:   PropTypes.number,
+    type:        PropTypes.string,
+    step:        PropTypes.number
+  })).isRequired
 }
