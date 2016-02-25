@@ -1,9 +1,15 @@
 'use strict'
-import { ADD_LANGUAGE } from './actions.js'
+import { ADD_LANGUAGE, ADD_LANGUAGE_SUCCESS } from './actions.js'
 export function appDesktop(state = { cardSets: [] }, action) {
   switch(action.type) {
     case ADD_LANGUAGE:
-      return {
+      let newLanguage = true
+      for(let i = 0; i < state.cardSets.length; i++)
+        if(state.cardSets[i].language === action.language) {
+          newLanguage = false
+          break
+        }
+      return newLanguage ? {
         cardSets: [
           ...state.cardSets,
           {
@@ -13,8 +19,21 @@ export function appDesktop(state = { cardSets: [] }, action) {
             correct: 0,
             incorrect: 0,
             type: 'VOCABULARY',
-            step: 0
+            step: 0,
+            isFetching: true
           }
+        ]
+      } : state
+    case ADD_LANGUAGE_SUCCESS:
+      for(let i = 0; i < state.cardSets.length; i++)
+        if(state.cardSets[i].language === action.language) {
+          state.cardsets[i].questions = action.data
+          state.cardsets[i].isFetching = false
+          break
+        }
+      return {
+        cardSets: [
+          ...state.cardSets
         ]
       }
     default:

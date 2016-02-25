@@ -29,7 +29,8 @@ AppDesktop.propTypes = {
     correct:     PropTypes.number.isRequired,
     incorrect:   PropTypes.number.isRequired,
     type:        PropTypes.string.isRequired,
-    step:        PropTypes.number.isRequired
+    step:        PropTypes.number.isRequired,
+    isFetching:  PropTypes.bool.isRequired 
   })).isRequired,
   onAddLanguage: PropTypes.func.isRequired
 }

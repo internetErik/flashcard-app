@@ -20,7 +20,7 @@ export class CardSet extends React.Component {
     return Math.ceil(Math.random() * length-1)
   }
   getQuestions() {
-    QuestionService(this.state.language, this.state.type)
+    QuestionService(this.props.set.language, this.props.set.type)
       .fail((err) => console.log(err))
       .done((data) => {
           var start = this.randomPosition(data.length)
@@ -50,13 +50,17 @@ export class CardSet extends React.Component {
       this.setState({ incorrect: this.state.incorrect+1 })
   }
   render() {
+    var set = this.props.set
+    if(this.props.set.isFetching)
+      return <span>Loading</span>
+
     var answerForm = "", question = "", answer = ""
-    if(this.state.questions.length > 0) {
-      let type = this.state.type
-      question = this.state.questions[this.state.curQuestion].question
-      answer = this.state.questions[this.state.curQuestion].answer
-      if(this.state.step > -1)
-        question = this.state.questions[this.state.curQuestion].question[this.state.step]
+    if(set.questions.length > 0) {
+      let type = set.type
+      question = set.questions[set.curQuestion].question
+      answer = set.questions[set.curQuestion].answer
+      if(set.step > -1)
+        question = set.questions[set.curQuestion].question[set.step]
       if(type === "DECLENSION")
         answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
       else if(type === "VOCABULARY")
@@ -69,7 +73,7 @@ export class CardSet extends React.Component {
     return (
       <div className="card-set">
         <QuestionTypeMenu onTypeClicked={ this.handleTypeClick.bind(this) } />
-        <ScoreBoard correct={ this.props.set.correct } incorrect={ this.state.incorrect } />
+        <ScoreBoard correct={ set.correct } incorrect={ set.incorrect } />
         <Card question={ question } />
         { answerForm }
       </div>
