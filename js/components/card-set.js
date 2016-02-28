@@ -8,6 +8,8 @@ import { AnswerText } from './answer-text.js!jsx'
 import { AnswerMultiple } from './answer-multiple.js!jsx'
 import { QuestionService } from '../services/question-service.js'
 import { AnswerService } from '../services/answer-service.js'
+import { appDesktopStore } from '../redux/stores.js'
+import { fetchQuestionsIfNeeded } from '../redux/actions.js'
 export class CardSet extends React.Component {
   constructor() { super() }
   handleTypeClick(type) {
@@ -21,14 +23,13 @@ export class CardSet extends React.Component {
   }
   getQuestions() {
     QuestionService(this.props.set.language, this.props.set.type)
-      .fail((err) => console.log(err))
-      .done((data) => {
+      .then((data) => {
           var start = this.randomPosition(data.length)
           this.setState({ questions: data, curQuestion: start })
         })
   }
   componentDidMount() {
-    this.getQuestions()
+    appDesktopStore.dispatch(fetchQuestionsIfNeeded(this.props.set.language, this.props.set.type))
   }
   handleAnswerSubmit(answer) {
     var cur = this.state.curQuestion

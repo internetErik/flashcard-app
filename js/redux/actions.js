@@ -1,3 +1,5 @@
+'use strict'
+import { QuestionService } from '../services/question-service.js'
 //action types
 export const ADD_LANGUAGE = 'ADD_LANGUAGE'
 export const ADD_LANGUAGE_SUCCESS = 'ADD_LANGUAGE_SUCCESS'
@@ -11,4 +13,25 @@ export function addLanguageSuccess(language, data) {
 }
 export function addLanguageFailure(language, error) {
   return { type: ADD_LANGUAGE_FAILURE, language, error }
+}
+//fetching
+function fetchQuestions(language, type) {
+  return dispatch => {
+    dispatch(addLanguage(language))
+    return QuestionService(language, type)
+      .then(response => response.json())
+      .then(json => dispatch(addLanguageSuccess(language, json)))
+  }
+}
+function shouldFetchQuestions(state, language) {
+  const set = state.cardSets.filter(s => s.language === language)[0]
+  return set.isFetching ? true : false
+}
+export function fetchQuestionsIfNeeded(language, type) {
+  return (dispatch, getState) => {
+    if (shouldFetchQuestions(getState(), language))
+      return dispatch(fetchQuestions(language, type))
+    else
+      return Promise.resolve()
+  }
 }

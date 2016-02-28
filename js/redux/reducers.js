@@ -3,13 +3,7 @@ import { ADD_LANGUAGE, ADD_LANGUAGE_SUCCESS } from './actions.js'
 export function appDesktop(state = { cardSets: [] }, action) {
   switch(action.type) {
     case ADD_LANGUAGE:
-      let newLanguage = true
-      for(let i = 0; i < state.cardSets.length; i++)
-        if(state.cardSets[i].language === action.language) {
-          newLanguage = false
-          break
-        }
-      return newLanguage ? {
+      return isLanguageSelected(state, action.language) ? {
         cardSets: [
           ...state.cardSets,
           {
@@ -27,8 +21,8 @@ export function appDesktop(state = { cardSets: [] }, action) {
     case ADD_LANGUAGE_SUCCESS:
       for(let i = 0; i < state.cardSets.length; i++)
         if(state.cardSets[i].language === action.language) {
-          state.cardsets[i].questions = action.data
-          state.cardsets[i].isFetching = false
+          state.cardSets[i].questions = action.data
+          state.cardSets[i].isFetching = false
           break
         }
       return {
@@ -39,4 +33,11 @@ export function appDesktop(state = { cardSets: [] }, action) {
     default:
       return state
   }
+}
+//helpers
+function isLanguageSelected(state, language) {
+  for(let i = 0; i < state.cardSets.length; i++)
+    if(state.cardSets[i].language === language)
+      return false
+  return true
 }

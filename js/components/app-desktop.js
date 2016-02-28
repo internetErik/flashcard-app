@@ -1,12 +1,10 @@
 'use strict'
 import React, { PropTypes } from 'react'
 import { CardSet } from './card-set.js!jsx'
-import { CardSet2 } from './card-set2.js!jsx'
 export class AppDesktop extends React.Component {
   render() {
     const { cardSets, onAddLanguage } = this.props
     var sets = cardSets.map(set => <CardSet set={ set } />)
-    console.dir(sets)
     return (
       <div className="app-desktop">
         <div>
@@ -14,7 +12,6 @@ export class AppDesktop extends React.Component {
           <button value="ATTIC_GREEK" onClick={ (e) => onAddLanguage(e.target.value) }>ATTIC GREEK</button>
           <button value="GERMAN"      onClick={ (e) => onAddLanguage(e.target.value) }>GERMAN</button>
         </div>
-        <CardSet2 />
         <h1>Card Sets</h1>
         { sets }
       </div>
