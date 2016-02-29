@@ -27,7 +27,10 @@ function fetchQuestions(language, questionType) {
   return dispatch => {
     dispatch(addLanguage(language))
     return QuestionService(language, questionType)
-      .then(response => response.json())
+      .then(response => {
+        if (response.status >= 400) console.log("Error!")
+        return response.json()
+      })
       .then(json => dispatch(addLanguageSuccess(language, json)))
   }
 }

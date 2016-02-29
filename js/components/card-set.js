@@ -21,15 +21,14 @@ export class CardSet extends React.Component {
     var set = this.props.set
     if(set.isFetching) {
       appDesktopStore.dispatch(fetchQuestionsIfNeeded(set.language, set.questionType))
-      return <h1>Loading</h1>
+      return <h1>Loading . . .</h1>
     }
     else {
       let answerForm = ""
+      let answer = set.questions[set.curQuestion].answer
       let question = (set.step > -1) ? 
         set.questions[set.curQuestion].question[set.step] :
         set.questions[set.curQuestion].question
-      let answer = set.questions[set.curQuestion].answer
-      
       if(set.questionType === "DECLENSION")
         answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
       else if(set.questionType === "VOCABULARY")
