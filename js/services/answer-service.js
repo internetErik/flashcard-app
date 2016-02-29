@@ -1,14 +1,14 @@
 'use strict'
-export var AnswerService = (type, question, answer, step) => {
-  if(AnswerTypes[type])
-    return AnswerTypes[type](question, answer, step)
+export var AnswerService = (questionType, question, answer, step) => {
+  if(ANSWER_TYPES[questionType])
+    return ANSWER_TYPES[questionType](question, answer, step)
   else
     console.log("Error!")
 }
-var AnswerTypes = {
-  "DECLENSION": (question, answer) => question.answer === answer,
-  "VOCABULARY": (question, answer) => question.answer.indexOf(answer) > -1,
+const ANSWER_TYPES = {
+  "DECLENSION": (question, answer)       => question.answer === answer,
+  "VOCABULARY": (question, answer)       => question.answer.indexOf(answer) > -1,
   "STEPS"     : (question, answer, step) => question.answer[step] === answer,
-  "MULTIPLE"  : (question, answer) => question.answer[0] === answer
+  "MULTIPLE"  : (question, answer)       => question.answer[0] === answer
 }
   
