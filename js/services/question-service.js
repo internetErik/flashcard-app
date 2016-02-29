@@ -1,8 +1,8 @@
 'use strict'
 import fetch from 'isomorphic-fetch'
-export var QuestionService = (language, type) => {
-  if(LANGUAGE_FOLDERS[language] && QUESTION_TYPES[type])
-    return QUESTION_TYPES[type](LANGUAGE_FOLDERS[language])
+export var QuestionService = (language, questionType) => {
+  if(LANGUAGE_FOLDERS[language] && QUESTION_TYPES[questionType])
+    return QUESTION_TYPES[questionType](LANGUAGE_FOLDERS[language])
   else
     console.log("Error!")
 }

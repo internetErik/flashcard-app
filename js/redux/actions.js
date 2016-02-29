@@ -23,10 +23,10 @@ export function changeQuestionType(language, questionType) {
   return { type: CHANGE_QUESTION_TYPE, language, questionType }
 }
 //fetching
-function fetchQuestions(language, type) {
+function fetchQuestions(language, questionType) {
   return dispatch => {
     dispatch(addLanguage(language))
-    return QuestionService(language, type)
+    return QuestionService(language, questionType)
       .then(response => response.json())
       .then(json => dispatch(addLanguageSuccess(language, json)))
   }
@@ -35,10 +35,10 @@ function shouldFetchQuestions(state, language) {
   const set = state.cardSets.filter(s => s.language === language)[0]
   return set.isFetching ? true : false
 }
-export function fetchQuestionsIfNeeded(language, type) {
+export function fetchQuestionsIfNeeded(language, questionType) {
   return (dispatch, getState) => {
     if (shouldFetchQuestions(getState(), language))
-      return dispatch(fetchQuestions(language, type))
+      return dispatch(fetchQuestions(language, questionType))
     else
       return Promise.resolve()
   }

@@ -20,14 +20,14 @@ export class AppDesktop extends React.Component {
 }
 AppDesktop.propTypes = {
   cardSets: PropTypes.arrayOf(PropTypes.shape({
-    language:    PropTypes.string.isRequired,
-    questions:   PropTypes.array.isRequired,
-    curQuestion: PropTypes.number.isRequired,
-    correct:     PropTypes.number.isRequired,
-    incorrect:   PropTypes.number.isRequired,
-    type:        PropTypes.string.isRequired,
-    step:        PropTypes.number.isRequired,
-    isFetching:  PropTypes.bool.isRequired 
+    language:     PropTypes.string.isRequired,
+    questions:    PropTypes.array.isRequired,
+    curQuestion:  PropTypes.number.isRequired,
+    correct:      PropTypes.number.isRequired,
+    incorrect:    PropTypes.number.isRequired,
+    questionType: PropTypes.string.isRequired,
+    step:         PropTypes.number.isRequired,
+    isFetching:   PropTypes.bool.isRequired 
   })).isRequired,
   onAddLanguage: PropTypes.func.isRequired
 }

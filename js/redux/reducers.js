@@ -7,7 +7,6 @@ import {
 } from './actions.js'
 import { AnswerService } from '../services/answer-service'
 export function appDesktop(state = { cardSets: [] }, action) {
-  console.log(action.type)
   switch(action.type) {
     case ADD_LANGUAGE:
       return isLanguageSelected(state, action.language) ? {
@@ -19,7 +18,7 @@ export function appDesktop(state = { cardSets: [] }, action) {
             curQuestion: 0,
             correct: 0,
             incorrect: 0,
-            type: 'VOCABULARY',
+            questionType: 'VOCABULARY',
             step: -1,
             isFetching: true
           }
@@ -70,7 +69,7 @@ function checkAnswer(state, language, answer) {
   var ndx = ndxOfSet(state, language)
   var set = state.cardSets[ndx]
   var cur = set.curQuestion
-  if(AnswerService(set.type, set.questions[cur], answer, set.step)) {
+  if(AnswerService(set.questionType, set.questions[cur], answer, set.step)) {
     set.correct++
     if(set.step >= 0)
       if(set.step < set.questions[cur].answer.length -1)
@@ -86,11 +85,11 @@ function checkAnswer(state, language, answer) {
     set.incorrect++
   return state
 }
-function changeQuestionType(state, language, type) {
+function changeQuestionType(state, language, questionType) {
   var ndx = ndxOfSet(state, language)
   var set = state.cardSets[ndx]
-  set.type = type
+  set.questionType = questionType
   set.isFetching = true
-  set.steps = type === 'STEPS' ? 0 : -1
+  set.steps = questionType === 'STEPS' ? 0 : -1
   return state
 }
