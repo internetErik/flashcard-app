@@ -37,21 +37,27 @@ export class CardSet extends React.Component {
   getQuestions(initial) {
     if(initial)
       QuestionService(this.props.set.language, this.props.set.questionType)
-        .fail((err) => console.log(err))
-        .done((data) => {
+        .then(response => {
+          if (response.status >= 400) console.log("Error!")
+          return response.json()
+        })
+        .then(json => {
           var state = Object.create(this.props.set)
-          var start = this.randomPosition(data.length)
+          var start = this.randomPosition(json.length)
           state.isFetching = false
-          state.questions = data
+          state.questions = json
           state.curQuestion = start
           this.setState(state)
         })
     else
       QuestionService(this.state.language, this.state.questionType)
-        .fail((err) => console.log(err))
-        .done((data) => {
+        .then(response => {
+          if (response.status >= 400) console.log("Error!")
+          return response.json()
+        })
+        .then(json => {
           var start = this.randomPosition(data.length)
-          this.setState({ questions: data, curQuestion: start, isFetching: false })
+          this.setState({ questions: json, curQuestion: start, isFetching: false })
         })
   }
   handleAnswerSubmit(answer) {
