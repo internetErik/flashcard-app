@@ -19,8 +19,8 @@ export function addLanguageFailure(language, error) {
 export function answerQuestion(language, answer) {
   return { type: ANSWER_QUESTION, language, answer }
 }
-export function changeQuestionType(language, type) {
-  return { type: CHANGE_QUESTION_TYPE, language, type }
+export function changeQuestionType(language, questionType) {
+  return { type: CHANGE_QUESTION_TYPE, language, questionType }
 }
 //fetching
 function fetchQuestions(language, type) {

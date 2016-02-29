@@ -7,6 +7,7 @@ import {
 } from './actions.js'
 import { AnswerService } from '../services/answer-service'
 export function appDesktop(state = { cardSets: [] }, action) {
+  console.log(action.type)
   switch(action.type) {
     case ADD_LANGUAGE:
       return isLanguageSelected(state, action.language) ? {
@@ -35,14 +36,14 @@ export function appDesktop(state = { cardSets: [] }, action) {
         ]
       }
     case ANSWER_QUESTION:
-      checkAnswer(state, action.language, action.answer)
+      state = checkAnswer(state, action.language, action.answer)
       return {
         cardSets: [
           ...state.cardSets
         ]
       }
     case CHANGE_QUESTION_TYPE:
-      changeQuestionType(state, action.language, action.type)
+      state = changeQuestionType(state, action.language, action.questionType)
       return {
         cardSets: [
           ...state.cardSets

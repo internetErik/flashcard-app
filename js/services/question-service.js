@@ -7,7 +7,7 @@ export var QuestionService = (language, type) => {
     console.log("Error!")
 }
 const QUESTION_TYPES = {
-  "DECLENSION": (f) => fetch(`api/${ f }/declensions.json`),
+  "DECLENSION": (f) => fetch(`api/${ f }/declension.json`),
   "VOCABULARY": (f) => fetch(`api/${ f }/vocabulary.json`),
   "STEPS"     : (f) => fetch(`api/${ f }/steps.json`),
   "MULTIPLE"  : (f) => fetch(`api/${ f }/multiple.json`)
