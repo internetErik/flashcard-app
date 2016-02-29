@@ -90,6 +90,6 @@ function changeQuestionType(state, language, questionType) {
   var set = state.cardSets[ndx]
   set.questionType = questionType
   set.isFetching = true
-  set.steps = questionType === 'STEPS' ? 0 : -1
+  set.step = questionType === 'STEPS' ? 0 : -1
   return state
 }
