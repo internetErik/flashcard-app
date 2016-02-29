@@ -9,57 +9,25 @@ import { AnswerMultiple } from './answer-multiple.js!jsx'
 import { QuestionService } from '../services/question-service.js'
 import { AnswerService } from '../services/answer-service.js'
 import { appDesktopStore } from '../redux/stores.js'
-import { fetchQuestionsIfNeeded } from '../redux/actions.js'
+import { fetchQuestionsIfNeeded, answerQuestion, changeQuestionType } from '../redux/actions.js'
 export class CardSet extends React.Component {
-  constructor() { super() }
   handleTypeClick(type) {
-    var state = {question: [], type: type}
-    state.step = (type === 'STEPS') ? 0 : -1
-    this.setState(state)
-    setTimeout(this.getQuestions.bind(this), 0)
-  }
-  randomPosition(length) {
-    return Math.ceil(Math.random() * length-1)
-  }
-  getQuestions() {
-    QuestionService(this.props.set.language, this.props.set.type)
-      .then((data) => {
-          var start = this.randomPosition(data.length)
-          this.setState({ questions: data, curQuestion: start })
-        })
-  }
-  componentDidMount() {
-    appDesktopStore.dispatch(fetchQuestionsIfNeeded(this.props.set.language, this.props.set.type))
+    appDesktopStore.dispatch(changeQuestionType(this.props.set.language, type))
   }
   handleAnswerSubmit(answer) {
-    var cur = this.state.curQuestion
-    if(AnswerService(this.state.type, this.state.questions[cur], answer, this.state.step)) {
-      let state = { correct: this.state.correct+1 }
-      if(this.state.step >= 0) {
-        if(this.state.step < this.state.questions[cur].answer.length -1)
-          state.step = this.state.step+1
-        else {
-          state.step = 0
-          state.curQuestion = this.randomPosition(this.state.questions.length)
-        }
-      }
-      else
-        state.curQuestion = this.randomPosition(this.state.questions.length)
-      this.setState(state)
-    }
-    else
-      this.setState({ incorrect: this.state.incorrect+1 })
+    appDesktopStore.dispatch(answerQuestion(this.props.set.language, answer))
   }
   render() {
     var set = this.props.set
-    if(this.props.set.isFetching)
+    if(set.isFetching) {
+      appDesktopStore.dispatch(fetchQuestionsIfNeeded(set.language, set.type))
       return <span>Loading</span>
-
-    var answerForm = "", question = "", answer = ""
-    if(set.questions.length > 0) {
+    }
+    else {
+      let answerForm = ""
       let type = set.type
-      question = set.questions[set.curQuestion].question
-      answer = set.questions[set.curQuestion].answer
+      let question = set.questions[set.curQuestion].question
+      let answer = set.questions[set.curQuestion].answer
       if(set.step > -1)
         question = set.questions[set.curQuestion].question[set.step]
       if(type === "DECLENSION")
@@ -70,14 +38,14 @@ export class CardSet extends React.Component {
         answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
       else if(type === "MULTIPLE")
         answerForm = <AnswerMultiple answers={ answer } onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
+      return (
+        <div className="card-set">
+          <QuestionTypeMenu onTypeClicked={ this.handleTypeClick.bind(this) } />
+          <ScoreBoard correct={ set.correct } incorrect={ set.incorrect } />
+          <Card question={ question } />
+          { answerForm }
+        </div>
+      )
     }
-    return (
-      <div className="card-set">
-        <QuestionTypeMenu onTypeClicked={ this.handleTypeClick.bind(this) } />
-        <ScoreBoard correct={ set.correct } incorrect={ set.incorrect } />
-        <Card question={ question } />
-        { answerForm }
-      </div>
-    )
   }
 }

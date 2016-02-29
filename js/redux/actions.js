@@ -1,9 +1,11 @@
 'use strict'
 import { QuestionService } from '../services/question-service.js'
 //action types
-export const ADD_LANGUAGE = 'ADD_LANGUAGE'
+export const ADD_LANGUAGE         = 'ADD_LANGUAGE'
 export const ADD_LANGUAGE_SUCCESS = 'ADD_LANGUAGE_SUCCESS'
 export const ADD_LANGUAGE_FAILURE = 'ADD_LANGUAGE_FAILURE'
+export const ANSWER_QUESTION      = 'ANSWER_QUESTION'
+export const CHANGE_QUESTION_TYPE = 'CHANGE_QUESTION_TYPE'
 //action creators
 export function addLanguage(language) {
   return { type: ADD_LANGUAGE, language }
@@ -13,6 +15,12 @@ export function addLanguageSuccess(language, data) {
 }
 export function addLanguageFailure(language, error) {
   return { type: ADD_LANGUAGE_FAILURE, language, error }
+}
+export function answerQuestion(language, answer) {
+  return { type: ANSWER_QUESTION, language, answer }
+}
+export function changeQuestionType(language, type) {
+  return { type: CHANGE_QUESTION_TYPE, language, type }
 }
 //fetching
 function fetchQuestions(language, type) {
