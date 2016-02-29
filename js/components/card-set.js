@@ -12,37 +12,51 @@ export class CardSet extends React.Component {
   constructor() {
     super()
     this.state = { 
-      questions: [{ question: '', answer: 0 }],
+      language: 'ATTIC_GREEK',
+      questions: [],
       curQuestion: 0,
       correct: 0,
       incorrect: 0,
-      type: 'STEPS',
+      questionType: 'STEPS',
+      isFetching: true,
       step: 0
     }
   }
-  handleTypeClick(type) {
-    var state = {question: [], type: type}
-    state.step = (type === 'STEPS') ? 0 : -1
+  componentDidMount() {
+    this.getQuestions(true)
+  }
+  handleTypeClick(questionType) {
+    var state = { question: [], questionType: questionType }
+    state.step = (questionType === 'STEPS') ? 0 : -1
     this.setState(state)
     setTimeout(this.getQuestions.bind(this), 0)
   }
   randomPosition(length) {
     return Math.ceil(Math.random() * length-1)
   }
-  getQuestions() {
-    QuestionService(this.state.type)
-      .fail((err) => console.log(err))
-      .done((data) => {
+  getQuestions(initial) {
+    if(initial)
+      QuestionService(this.props.set.language, this.props.set.questionType)
+        .fail((err) => console.log(err))
+        .done((data) => {
+          var state = Object.create(this.props.set)
           var start = this.randomPosition(data.length)
-          this.setState({ questions: data, curQuestion: start })
+          state.isFetching = false
+          state.questions = data
+          state.curQuestion = start
+          this.setState(state)
         })
-  }
-  componentDidMount() {
-    this.getQuestions()
+    else
+      QuestionService(this.state.language, this.state.questionType)
+        .fail((err) => console.log(err))
+        .done((data) => {
+          var start = this.randomPosition(data.length)
+          this.setState({ questions: data, curQuestion: start, isFetching: false })
+        })
   }
   handleAnswerSubmit(answer) {
     var cur = this.state.curQuestion
-    if(AnswerService(this.state.type, this.state.questions[cur], answer, this.state.step)) {
+    if(AnswerService(this.state.questionType, this.state.questions[cur], answer, this.state.step)) {
       let state = { correct: this.state.correct+1 }
       if(this.state.step >= 0) {
         if(this.state.step < this.state.questions[cur].answer.length -1)
@@ -60,29 +74,34 @@ export class CardSet extends React.Component {
       this.setState({ incorrect: this.state.incorrect+1 })
   }
   render() {
-    var answerForm = "", question = "", answer = ""
-    if(this.state.questions.length > 0) {
-      let type = this.state.type
-      question = this.state.questions[this.state.curQuestion].question
-      answer = this.state.questions[this.state.curQuestion].answer
-      if(this.state.step > -1)
-        question = this.state.questions[this.state.curQuestion].question[this.state.step]
-      if(type === "DECLENSION")
-        answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
-      else if(type === "VOCABULARY")
-        answerForm = <AnswerText onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
-      else if(type === "STEPS")
-        answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
-      else if(type === "MULTIPLE")
-        answerForm = <AnswerMultiple answers={ answer } onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
+    var set = this.state
+    if(set.isFetching || set.questions.length === 0) {
+      return <h1>Loading . . .</h1>
     }
-    return (
-      <div className="card-set">
-        <QuestionTypeMenu onTypeClicked={ this.handleTypeClick.bind(this) } />
-        <ScoreBoard correct={ this.state.correct } incorrect={ this.state.incorrect } />
-        <Card question={ question } />
-        { answerForm }
-      </div>
-    )
+    else {
+      let answerForm = "", question = "", answer = ""
+      if(set.questions.length > 0) {
+        question = set.questions[set.curQuestion].question
+        answer = set.questions[set.curQuestion].answer
+        if(set.step > -1)
+          question = set.questions[set.curQuestion].question[set.step]
+        if(set.questionType === "DECLENSION")
+          answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
+        else if(set.questionType === "VOCABULARY")
+          answerForm = <AnswerText onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
+        else if(set.questionType === "STEPS")
+          answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
+        else if(set.questionType === "MULTIPLE")
+          answerForm = <AnswerMultiple answers={ answer } onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
+      }
+      return (
+        <div className="card-set">
+          <QuestionTypeMenu onTypeClicked={ this.handleTypeClick.bind(this) } />
+          <ScoreBoard correct={ set.correct } incorrect={ set.incorrect } />
+          <Card question={ question } />
+          { answerForm }
+        </div>
+      )
+    }
   }
 }
