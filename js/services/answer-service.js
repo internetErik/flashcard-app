@@ -11,4 +11,3 @@ const ANSWER_TYPES = {
   "STEPS"     : (question, answer, step) => question.answer[step] === answer,
   "MULTIPLE"  : (question, answer)       => question.answer[0] === answer
 }
-  
