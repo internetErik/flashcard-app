@@ -8,11 +8,11 @@ export class AppDesktop extends React.Component {
   }
   onLanguageAdd(e) {
     e.stopPropagation()
-    var language = e.target.value
-    if(this.isLanguageSelected(this.state, language)) {
+    var topic = e.target.value
+    if(this.isLanguageSelected(this.state, topic)) {
       let state = { cardSets: this.state.cardSets }
       state.cardSets.push({
-        language: language,
+        topic: topic,
         questions: [],
         curQuestion: 0,
         correct: 0,
@@ -24,14 +24,14 @@ export class AppDesktop extends React.Component {
       this.setState(state)
     }
   }
-  ndxOfSet(state, language) {
+  ndxOfSet(state, topic) {
     for(let i = 0; i < state.cardSets.length; i++)
-      if(state.cardSets[i].language === language)
+      if(state.cardSets[i].topic === topic)
         return i
     return -1
   }
-  isLanguageSelected(state, language) {
-    return (this.ndxOfSet(state, language) > -1) ? false : true
+  isLanguageSelected(state, topic) {
+    return (this.ndxOfSet(state, topic) > -1) ? false : true
   }
   render() {
     var sets = this.state.cardSets.map(set => <CardSet set={ set }/>)
