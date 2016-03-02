@@ -12,7 +12,7 @@ export class CardSet extends React.Component {
   constructor() {
     super()
     this.state = { 
-      language: 'ATTIC_GREEK',
+      topic: 'ATTIC_GREEK',
       questions: [],
       curQuestion: 0,
       correct: 0,
@@ -26,7 +26,7 @@ export class CardSet extends React.Component {
     this.getQuestions(true)
   }
   handleTypeClick(questionType) {
-    var state = { question: [], questionType: questionType }
+    var state = { isFetching: true, questionType: questionType }
     state.step = (questionType === 'STEPS') ? 0 : -1
     this.setState(state)
     setTimeout(this.getQuestions.bind(this), 0)
@@ -36,7 +36,7 @@ export class CardSet extends React.Component {
   }
   getQuestions(initial) {
     if(initial)
-      QuestionService(this.props.set.language, this.props.set.questionType)
+      QuestionService(this.props.set.topic, this.props.set.questionType)
         .then(response => {
           if (response.status >= 400) console.log("Error!")
           return response.json()
@@ -50,13 +50,13 @@ export class CardSet extends React.Component {
           this.setState(state)
         })
     else
-      QuestionService(this.state.language, this.state.questionType)
+      QuestionService(this.state.topic, this.state.questionType)
         .then(response => {
           if (response.status >= 400) console.log("Error!")
           return response.json()
         })
         .then(json => {
-          var start = this.randomPosition(data.length)
+          var start = this.randomPosition(json.length)
           this.setState({ questions: json, curQuestion: start, isFetching: false })
         })
   }
