@@ -61,7 +61,6 @@ export class CardSet extends React.Component {
   }
   handleAnswerSubmit(answer) {
     var cur = this.state.curQuestion
-    console.dir(this.state.questions[cur])
     if(AnswerService(this.state.questionType, this.state.questions[cur], answer, this.state.step)) {
       let state = { correct: this.state.correct+1 }
       if(QuestionService.hasSteps(this.state.questionType)) {

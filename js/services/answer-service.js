@@ -6,8 +6,8 @@ export var AnswerService = (questionType, question, answer, step) => {
     console.log("Error!")
 }
 const ANSWER_TYPES = {
-  "DECLENSION":       (question, answer) => question.answer[0] === answer,
+  "DECLENSION":       (question, answer) => question.answer[0] == answer,
   "VOCABULARY":       (question, answer) => question.answer.indexOf(answer) > -1,
-  "STEPS"     : (question, answer, step) => question.answer[0] === answer,
-  "MULTIPLE"  :       (question, answer) => question.answer[0] === answer
+  "STEPS"     : (question, answer, step) => question.answer[step] == answer,
+  "MULTIPLE"  :       (question, answer) => question.answer[0] == answer
 }
