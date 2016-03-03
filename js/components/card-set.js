@@ -3,7 +3,6 @@ import React from 'react'
 import { Card } from './card.js!jsx'
 import { ScoreBoard } from './score-board.js!jsx'
 import { QuestionTypeMenu } from './question-type-menu.js!jsx'
-import { AnswerButtons } from './answer-buttons.js!jsx'
 import { AnswerText } from './answer-text.js!jsx'
 import { AnswerMultiple } from './answer-multiple.js!jsx'
 import { QuestionService } from '../services/question-service.js'
@@ -27,7 +26,7 @@ export class CardSet extends React.Component {
   }
   handleTypeClick(questionType) {
     var state = { isFetching: true, questionType: questionType }
-    state.step = (questionType === 'STEPS') ? 0 : -1
+    state.step = (QuestionService.hasSteps(questionType)) ? 0 : -1
     this.setState(state)
     setTimeout(this.getQuestions.bind(this), 0)
   }
@@ -36,7 +35,7 @@ export class CardSet extends React.Component {
   }
   getQuestions(initial) {
     if(initial)
-      QuestionService(this.props.set.topic, this.props.set.questionType)
+      QuestionService.fetch(this.props.set.topic, this.props.set.questionType)
         .then(response => {
           if (response.status >= 400) console.log("Error!")
           return response.json()
@@ -50,7 +49,7 @@ export class CardSet extends React.Component {
           this.setState(state)
         })
     else
-      QuestionService(this.state.topic, this.state.questionType)
+      QuestionService.fetch(this.state.topic, this.state.questionType)
         .then(response => {
           if (response.status >= 400) console.log("Error!")
           return response.json()
@@ -62,9 +61,10 @@ export class CardSet extends React.Component {
   }
   handleAnswerSubmit(answer) {
     var cur = this.state.curQuestion
+    console.dir(this.state.questions[cur])
     if(AnswerService(this.state.questionType, this.state.questions[cur], answer, this.state.step)) {
       let state = { correct: this.state.correct+1 }
-      if(this.state.step >= 0) {
+      if(QuestionService.hasSteps(this.state.questionType)) {
         if(this.state.step < this.state.questions[cur].answer.length -1)
           state.step = this.state.step+1
         else {
@@ -89,21 +89,18 @@ export class CardSet extends React.Component {
       if(set.questions.length > 0) {
         question = set.questions[set.curQuestion].question
         answer = set.questions[set.curQuestion].answer
-        if(set.step > -1)
+        if(QuestionService.hasSteps(set.questionType))
           question = set.questions[set.curQuestion].question[set.step]
-        if(set.questionType === "DECLENSION")
-          answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
-        else if(set.questionType === "VOCABULARY")
+        if(QuestionService.answerFormType(set.questionType, "TEXT"))
           answerForm = <AnswerText onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
-        else if(set.questionType === "STEPS")
-          answerForm = <AnswerButtons onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
-        else if(set.questionType === "MULTIPLE")
+        else if(QuestionService.answerFormType(set.questionType, "MULTIPLE_CHOICE"))
           answerForm = <AnswerMultiple answers={ answer } onAnswerSubmit={ this.handleAnswerSubmit.bind(this) } />
       }
       return (
         <div className="card-set">
           <QuestionTypeMenu onTypeClicked={ this.handleTypeClick.bind(this) } />
           <ScoreBoard correct={ set.correct } incorrect={ set.incorrect } />
+          <h2>{ set.questionType }</h2>
           <Card question={ question } />
           { answerForm }
         </div>
