@@ -1,13 +1,15 @@
 'use strict'
 export var AnswerService = (questionType, question, answer, step) => {
-  if(ANSWER_TYPES[questionType])
-    return ANSWER_TYPES[questionType](question, answer, step)
+  if(IN_LIST.indexOf(questionType) > -1)
+    return question.answer.indexOf(answer) > -1
+  else if(STEP.indexOf(questionType) > -1)
+    return question.answer[step] == answer
+  else if(FIRST_IN_LIST.indexOf(questionType) > -1)
+    return question.answer[0] == answer
   else
     console.log("Error!")
 }
-const ANSWER_TYPES = {
-  "VOCABULARY":       (question, answer) => question.answer.indexOf(answer) > -1,
-  "STEPS"     : (question, answer, step) => question.answer[step] == answer,
-  "DECLENSION":       (question, answer) => question.answer[0] == answer,
-  "MULTIPLE"  :       (question, answer) => question.answer[0] == answer
-}
+//configure here how different question types are checked
+const IN_LIST = ["VOCABULARY"]
+const STEP = ["STEPS"]
+const FIRST_IN_LIST = ["DECLENSION", "MULTIPLE"]
