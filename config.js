@@ -21,7 +21,7 @@ System.config({
     "isomorphic-fetch": "npm:isomorphic-fetch@2.2.1",
     "jquery": "npm:jquery@2.2.4",
     "jsx": "github:floatdrop/plugin-jsx@1.2.1",
-    "react": "npm:react@0.14.8",
+    "react": "npm:react@15.3.2",
     "react-dom": "npm:react-dom@0.14.8",
     "react-redux": "npm:react-redux@4.4.5",
     "redux": "npm:redux@3.6.0",
