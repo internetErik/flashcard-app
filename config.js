@@ -25,7 +25,7 @@ System.config({
     "react-dom": "npm:react-dom@15.3.2",
     "react-redux": "npm:react-redux@4.4.5",
     "redux": "npm:redux@3.6.0",
-    "redux-thunk": "npm:redux-thunk@1.0.3",
+    "redux-thunk": "npm:redux-thunk@2.1.0",
     "github:floatdrop/plugin-jsx@1.2.1": {
       "react-tools": "npm:react-tools@0.13.3"
     },

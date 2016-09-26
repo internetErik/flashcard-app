@@ -4,7 +4,7 @@ import { CardSet } from './card-set.js!jsx'
 export class AppDesktop extends React.Component {
   render() {
     const { cardSets, onAddLanguage } = this.props
-    var sets = cardSets.map(set => <CardSet set={ set } />)
+    var sets = cardSets.map((set, i) => <CardSet key={ i } set={ set } />)
     return (
       <div className="app-desktop">
         <div>

@@ -11,8 +11,8 @@ export class AnswerMultiple extends React.Component {
     if(Object.prototype.toString.call(this.props.answers) === '[object Array]') {
       let correctAnswer = <button value={ this.props.answers[0] } onClick={ this.handleButtonAnswer.bind(this) }>{ this.props.answers[0] }</button> 
       let falseAnswers = shuffle(this.props.answers.slice(1))
-        .map((a) => {
-          return <button value={ a } onClick={ this.handleButtonAnswer.bind(this) }>{ a }</button>
+        .map((a, i) => {
+          return <button key={ i } value={ a } onClick={ this.handleButtonAnswer.bind(this) }>{ a }</button>
         })
         .slice(0,3)
       answers = shuffle([correctAnswer].concat(falseAnswers))
