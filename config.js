@@ -22,7 +22,7 @@ System.config({
     "jquery": "npm:jquery@2.2.4",
     "jsx": "github:floatdrop/plugin-jsx@1.2.1",
     "react": "npm:react@15.3.2",
-    "react-dom": "npm:react-dom@0.14.8",
+    "react-dom": "npm:react-dom@15.3.2",
     "react-redux": "npm:react-redux@4.4.5",
     "redux": "npm:redux@3.6.0",
     "redux-thunk": "npm:redux-thunk@1.0.3",
@@ -316,9 +316,6 @@ System.config({
       "create-hash": "npm:create-hash@1.1.2",
       "crypto": "github:jspm/nodelibs-crypto@0.1.0"
     },
-    "npm:fbjs@0.6.1": {
-      "process": "github:jspm/nodelibs-process@0.1.2"
-    },
     "npm:fbjs@0.8.4": {
       "core-js": "npm:core-js@1.2.7",
       "immutable": "npm:immutable@3.8.1",
@@ -485,8 +482,8 @@ System.config({
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:react-dom@0.14.8": {
-      "react": "npm:react@0.14.8"
+    "npm:react-dom@15.3.2": {
+      "react": "npm:react@15.3.2"
     },
     "npm:react-redux@4.4.5": {
       "hoist-non-react-statics": "npm:hoist-non-react-statics@1.2.0",
@@ -501,10 +498,6 @@ System.config({
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "commoner": "npm:commoner@0.10.4",
       "jstransform": "npm:jstransform@10.1.0",
-      "process": "github:jspm/nodelibs-process@0.1.2"
-    },
-    "npm:react@0.14.8": {
-      "fbjs": "npm:fbjs@0.6.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:react@15.3.2": {

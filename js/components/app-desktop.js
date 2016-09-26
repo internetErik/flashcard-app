@@ -1,5 +1,5 @@
 'use strict'
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { CardSet } from './card-set.js!jsx'
 export class AppDesktop extends React.Component {
   render() {
@@ -19,15 +19,15 @@ export class AppDesktop extends React.Component {
   }
 }
 AppDesktop.propTypes = {
-  cardSets: PropTypes.arrayOf(PropTypes.shape({
-    language:     PropTypes.string.isRequired,
-    questions:    PropTypes.array.isRequired,
-    curQuestion:  PropTypes.number.isRequired,
-    correct:      PropTypes.number.isRequired,
-    incorrect:    PropTypes.number.isRequired,
-    questionType: PropTypes.string.isRequired,
-    step:         PropTypes.number.isRequired,
-    isFetching:   PropTypes.bool.isRequired 
+  cardSets: React.PropTypes.arrayOf(React.PropTypes.shape({
+    language:     React.PropTypes.string.isRequired,
+    questions:    React.PropTypes.array.isRequired,
+    curQuestion:  React.PropTypes.number.isRequired,
+    correct:      React.PropTypes.number.isRequired,
+    incorrect:    React.PropTypes.number.isRequired,
+    questionType: React.PropTypes.string.isRequired,
+    step:         React.PropTypes.number.isRequired,
+    isFetching:   React.PropTypes.bool.isRequired 
   })).isRequired,
-  onAddLanguage: PropTypes.func.isRequired
+  onAddLanguage: React.PropTypes.func.isRequired
 }
